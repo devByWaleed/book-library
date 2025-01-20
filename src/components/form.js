@@ -1,14 +1,9 @@
 // Importing Modules & Hooks
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+
 
 // Function with props to handle Pop-up
-function UserForm({ isVisible, handleClosePopup }) {
-
-
-    // main array for saving books
-    const [books, setBooks] = useState(() => {
-        return JSON.parse(localStorage.getItem("books")) || [];
-    });
+function UserForm({ isVisible, handleClosePopup, getCurrentDate, books, updateBooks }) {
 
     // Input Fields State Handling
     const [title, setTitle] = useState('');
@@ -24,26 +19,13 @@ function UserForm({ isVisible, handleClosePopup }) {
         event.preventDefault();
 
         // Logic to get current date
-        const today = new Date();
-        const dd = String(today.getDate()).padStart(2, '0');
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const yyyy = today.getFullYear();
-        const current_date = `${yyyy}-${mm}-${dd}`;
+        const current_date = getCurrentDate();
 
         // Setting Default Status (based on current date)
         const status = returnDate < current_date ? "Overdue" : "Borrowed";
 
-        // // Normalize title for case-insensitive comparison
-        // const normalizedTitle = title.trim().toLowerCase();
-        // // Check for redundancy (case-insensitive check)
-        // if (books.some(book => book.title.trim().toLowerCase() === normalizedTitle)) {
-        //     alert("Book With Same Title Already Exists!!!");
-        //     return;
-        // }
-
-
         // Js Object to save data in key-value form
-        let book = {
+        let new_book = {
             title,
             writer,
             category,
@@ -52,7 +34,9 @@ function UserForm({ isVisible, handleClosePopup }) {
             status,
         }
 
-        setBooks([...books, book]);     // spread operator to add another book after 1st one
+        updateBooks([...books, new_book]);     // spread operator to add another book
+
+        // Resetting the form's fields
         setTitle('');
         setWriter('');
         setCategory('');
@@ -60,11 +44,7 @@ function UserForm({ isVisible, handleClosePopup }) {
         setReturnDate('');
     }
 
-    // Saving data to local storage using useEffect(so that the behaviour is ok)
-    useEffect(() => {
-        localStorage.setItem("books", JSON.stringify(books));
-    }, [books]);
-
+    // to handle the pop-up menu
     if (!isVisible) return null;
 
     return (
@@ -75,21 +55,21 @@ function UserForm({ isVisible, handleClosePopup }) {
                 <form onSubmit={handleAddBook}>
                     <label className="block mt-2 text-xs  lg:text-xl">Book Title</label>
                     <input type="text" id="title" className="w-full p-2 mt-1 border border-solid border-gray-300 rounded"
-                        placeholder="Book Name" required onChange={(event) => setTitle(event.target.value)} value={title} />
+                        placeholder="Book Name" required onChange={(event) => setTitle(event.target.value.toUpperCase())} value={title} />
 
                     <label className="block mt-2 text-xs  lg:text-xl">Book Writer</label>
                     <input type="text" id="composer" className="w-full p-2 mt-1 border border-solid border-gray-300 rounded"
-                        placeholder="Writer Name" required onChange={(event) => setWriter(event.target.value)} value={writer} />
+                        placeholder="Writer Name" required onChange={(event) => setWriter(event.target.value.toUpperCase())} value={writer} />
 
                     <label className="block mt-2 text-xs  lg:text-xl">Category</label>
                     <input type="text" id="category" className="w-full p-2 mt-1 border border-solid border-gray-300 rounded"
-                        placeholder="Category" required onChange={(event) => setCategory(event.target.value)} value={category} />
+                        placeholder="Category" required onChange={(event) => setCategory(event.target.value.toUpperCase())} value={category} />
 
                     <label className="block mt-2 text-xs  lg:text-xl">Borrow Date</label>
-                    <input type="date" name="borrowDate" placeholder="Select Borrow Date" onChange={(event) => setBorrowDate(event.target.value)} value={borrowDate} />
+                    <input type="date" name="borrowDate" placeholder="Select Borrow Date" required onChange={(event) => setBorrowDate(event.target.value)} value={borrowDate} />
 
                     <label className="block mt-2 text-xs  lg:text-xl">Return Date</label>
-                    <input type="date" name="returnDate" placeholder="Select Return Date" onChange={(event) => setReturnDate(event.target.value)} value={returnDate} />
+                    <input type="date" name="returnDate" placeholder="Select Return Date" required onChange={(event) => setReturnDate(event.target.value)} value={returnDate} />
 
                     <button type="submit"
                         className="mt-4 p-2 w-full border-none cursor-pointer rounded text-white bg-gradient-to-b from-orange-600 via-yellow-400 to-amber-500  hover:bg-gradient-to-t hover:from-yellow-600 hover:via-amber-400 hover:to-orange-500"
