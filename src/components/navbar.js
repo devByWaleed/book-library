@@ -53,7 +53,7 @@ function NavBar({ search, setSearch, categories, setCategories, getCurrentDate, 
                 <section className="links  flex gap-x-2 items-center">
 
                     {location.pathname === '/history-page' && (
-                        <Link to="/" search={search} categories={categories} className="no-underline font-normal italic hover:underline text-amber-600">Books</Link>
+                        <Link to="/" search={search} categories={categories} className="no-underline font-normal italic hover:underline text-amber-600 hover:transition-transform hover:duration-300 hover:ease-in-out  hover:-translate-x-4">Books</Link>
                     )}
 
                     {location.pathname === '/' && (
