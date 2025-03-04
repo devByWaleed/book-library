@@ -31,16 +31,16 @@ function NavBar({ search, setSearch, categories, setCategories, getCurrentDate, 
     return (
         <>
             <nav className="flex items-center text-sm justify-between p-4 w-full bg-black drop-shadow-2xl hover:shadow-blue-900">
-                <h1 className="lg:text-2xl pl-2 font-bold italic text-amber-600 hover:transition-transform hover:duration-300 hover:ease-in-out  hover:translate-x-4">Book Library</h1>
+                <h1 className="lg:text-2xl pl-2 font-bold italic text-amber-600 hover:translate-x-4">Book Library</h1>
 
                 <section className="text-amber-600 bg-black">
                     <details className="flex flex-col items-center justify-center gap-y-2 w-full lg:items-center lg:pl-3 lg:justify-center">
                         <summary>Filters</summary>
                         <div className="flex flex-col gap-y-2 justify-around p-3  top-full absolute z-50 w-full left-0 right-0 bg-black  lg:flex-row lg:gap-x-2">
-                            <input type="text" name="" id="" className="lg:w-full p-1 mt-1 rounded border border-solid border-gray-300"
+                            <input type="text" className="lg:w-full p-1 mt-1 rounded border border-solid border-gray-300"
                                 placeholder="Search Book With Title" onChange={(event) => setSearch(event.target.value)} />
-                            <select name="" id="" className="p-1 rounded mt-1 lg:w-full" onChange={(event) => setCategories(event.target.value)}>
-                                <option value="">Choose</option>
+                            <select className="p-1 rounded mt-1 lg:w-full" onChange={(event) => setCategories(event.target.value)}>
+                                <option>Choose</option>
                                 {books && uniqueCategories.map((category, index) =>
                                     <option key={index} value={category}>{category}</option>
                                 )}
@@ -61,7 +61,7 @@ function NavBar({ search, setSearch, categories, setCategories, getCurrentDate, 
                     )}
 
                     <button id="addBookBtn"
-                        className="w-9 h-9 flex items-center justify-center border-none cursor-pointer rounded-full text-white bg-gradient-to-t from-orange-600 via-yellow-400 to-amber-500 hover:bg-gradient-to-t hover:from-orange-400 hover:via-yellow-600 hover:to-amber-700 hover:transition-transform hover:duration-300 hover:ease-in-out  hover:-translate-x-4"
+                        className="w-9 h-9 flex items-center justify-center border-none cursor-pointer rounded-full text-white bg-gradient-to-t from-orange-600 via-yellow-400 to-amber-500 hover:bg-gradient-to-t hover:from-orange-400 hover:via-yellow-600 hover:to-amber-700"
                         title="Add New" onClick={handlePopup}>&#43;</button>
                 </section>
             </nav>

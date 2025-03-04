@@ -5,6 +5,9 @@ import React, { useState } from 'react';
 // Function with props to handle Pop-up
 function UserForm({ isVisible, handleClosePopup, getCurrentDate, books, updateBooks }) {
 
+    // Logic to get current date
+    const current_date = getCurrentDate();
+
     // Input Fields State Handling
     const [title, setTitle] = useState('');
     const [writer, setWriter] = useState('');
@@ -12,17 +15,25 @@ function UserForm({ isVisible, handleClosePopup, getCurrentDate, books, updateBo
     const [borrowDate, setBorrowDate] = useState('');
     const [returnDate, setReturnDate] = useState('');
 
+    
 
     function handleAddBook(event) {
 
         // Prevent Default Form Behaviour
         event.preventDefault();
 
-        // Logic to get current date
-        const current_date = getCurrentDate();
+        const currentDateObj = new Date(current_date);
+        const returnDateObj = new Date(returnDate);
 
-        // Setting Default Status (based on current date)
-        const status = returnDate < current_date ? "Overdue" : "Borrowed";
+        let status = '';
+
+        if (currentDateObj > returnDateObj) {
+            status = 'Overdue';
+        }
+        else {
+            status = 'Borrowed';
+        }
+       
 
         // Js Object to save data in key-value form
         let new_book = {
@@ -48,7 +59,7 @@ function UserForm({ isVisible, handleClosePopup, getCurrentDate, books, updateBo
     if (!isVisible) return null;
 
     return (
-        <div id="popup" className="flex fixed top-0 left-0 w-full h-full items-center justify-center bg-black bg-opacity-50 z-50">
+        <section id="popup" className="flex fixed top-0 left-0 w-full h-full items-center justify-center bg-black bg-opacity-50 z-50">
             <div className="p-3 w-80 rounded-lg text-center relative bg-[#F5F5F5]">
                 <span id="closeBtn" className="absolute top-3 right-3 text-xl cursor-pointer" onClick={handleClosePopup}>&times;</span>
                 <h2>Add New Book</h2>
@@ -76,7 +87,7 @@ function UserForm({ isVisible, handleClosePopup, getCurrentDate, books, updateBo
                         name="submit">Add New Book</button>
                 </form>
             </div>
-        </div>
+        </section>
     );
 }
 

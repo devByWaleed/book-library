@@ -6,7 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import NavBar from './components/navbar';
 import History from './components/history';
 import Books from './components/books';
-import UserForm from './components/form';
+
 
 // Main Function (Function Component)
 function App() {
@@ -37,10 +37,10 @@ function App() {
   // Function to get curretn date
   const getCurrentDate = () => {
     const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
     const yyyy = today.getFullYear();
-    const current_date = `${dd}-${mm}-${yyyy}`;
+    const current_date = `${mm}-${dd}-${yyyy}`;
 
     return current_date;
   }
@@ -51,7 +51,7 @@ function App() {
     <main className="flex flex-col  min-h-screen  bg-gradient-to-t from-[#2C3E50] to-[#FFFFFF]">
       <>
         <NavBar search={search} setSearch={setSearch} categories={categories} setCategories={setCategories} getCurrentDate={getCurrentDate} books={books} updateBooks={updateBooks} />
-        <UserForm books={books} updateBooks={updateBooks} />
+        {/* No need to define UserForm component here, it has to be defined in navbar component */}
       </>
       <Routes>
         <Route path="/" element={<Books search={search} categories={categories} getCurrentDate={getCurrentDate} books={books} updateBooks={updateBooks} />} />

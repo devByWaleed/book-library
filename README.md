@@ -27,7 +27,7 @@ The **React JS Book-Library Project** is a simple, web-based application that pr
 - **`useEffect` Hook**: This hook manage data retrieving from **Local Storage** without reloading the page.
 - **`useLocation` Hook**: This hook manage the url's of navbar.
 - **`LINK` tag**: This tag handle the url to `books` & `history` page.
-- **`BrowserRouter` Library**: This library manages the url navigations.
+- **`HashRouter` Library**: This library manages the url navigations.
 
 ---
 **Usage:**  
